@@ -56,3 +56,25 @@ BeautifulSoup
 ## ▶️ How to Run the Project
 
 Clone the repository
+
+git clone https://github.com/VamshiKodi/neuropilot.git
+
+Navigate to the project folder
+
+cd neuropilot
+
+Install dependencies
+
+pip install -r requirements.txt
+
+Run the application
+
+python app.py
+
+Open the application in your browser
+
+http://127.0.0.1:5000
+
+Allow microphone permission and say:
+
+Hey Neuro
