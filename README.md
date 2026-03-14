@@ -13,68 +13,93 @@ Users can wake the assistant using the voice command **"Hey Neuro"** and interac
 • Voice wake-word activation ("Hey Neuro")  
 • Autonomous AI task planning  
 • Computer automation and control  
-• File system management  
-• Memory system for persistent knowledge  
-• Web search with AI summarization  
-• Email automation  
-• Reminder system  
-• Real-time system monitoring  
-• Holographic Jarvis-style interface with a 3D robot  
 
 ---
 
-## 🧠 Example Commands
+## ✨ Key Features
 
-Hey Neuro
+### 🧠 1. Autonomous Goal Mode
+NeuroPilot can decompose high-level objectives (e.g., *"Help me prepare my research on space exploration"*) into structured action plans. It analyzes the goal, generates a plan, and executes it step-by-step.
 
-Open Chrome
+### 🖥️ 2. Full Computer Control
+Using `pyautogui`, NeuroPilot can type, press keys, and execute hotkeys. It can launch any application (Notepad, Chrome, VS Code) and perform complex tasks like setting up coding environments.
 
-Search for AI agents
+### 📁 3. Intelligent File Assistant
+A robust file management system that allows the AI to create folders, move/rename files, and find documents across your workspace with built-in path protection.
 
-Create a folder called hackathon
+### 🌐 4. Web Intelligence
+Real-time web search integration with AI-powered summarization. NeuroPilot doesn't just give you links; it reads the results and provides a mission-style briefing.
 
-Remember my project name is NeuroPilot
+### 🎙️ 5. Bi-Directional Voice & Wake Word
+"Hey Neuro!" Activation. Use the Web Speech API for seamless voice input and high-quality Text-to-Speech (TTS) for AI replies.
 
-Agent: prepare coding environment
-
----
-
-## 🛠 Tech Stack
-
-Python  
-Flask  
-Google Gemini API  
-JavaScript  
-HTML / CSS  
-SpeechRecognition API  
-pyautogui  
-psutil  
-BeautifulSoup  
+### 📊 6. Holographic System Dashboard
+Live telemetry panels surrounding a 3D robot background. Monitor CPU, RAM, Disk usage, and AI process logs in real-time with a futuristic HUD.
 
 ---
 
-## ▶️ How to Run the Project
+## 🛠️ Technical Stack
 
-Clone the repository
+- **AI Engine:** Google Gemini 2.5 Flash (`google-genai`)
+- **Backend:** Flask (Python 3.12)
+- **Frontend:** Vanilla JS + CSS3 (Holographic HUD, 3D Sketchfab Integration)
+- **Automation:** `pyautogui`, `subprocess`, `os`
+- **System Monitoring:** `psutil`
+- **Web Intelligence:** `BeautifulSoup4`, `requests`
+- **Voice:** Web Speech API, `SpeechRecognition`
 
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Python 3.12 or higher
+- A Google Gemini API Key ([Get one here](https://aistudio.google.com/app/apikey))
+
+### 2. Installation
+```bash
+# Clone the repository
 git clone https://github.com/VamshiKodi/neuropilot.git
-
-Navigate to the project folder
-
 cd neuropilot
 
-Install dependencies
-
+# Install dependencies
 pip install -r requirements.txt
+```
 
-Run the application
+### 3. Configuration
+Create a `.env` file in the root directory:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+```
 
+### 4. Run the Mission
+```bash
 python app.py
+```
+Open `http://localhost:5000` in your browser.
 
-Open the application in your browser
+---
 
-http://127.0.0.1:5000
+## 🛡️ Security & Safety
+- **Risk Confirmation Layer:** All "dangerous" actions (deleting files, typing on computer, sending emails) require explicit user confirmation via the UI.
+- **Root Protection:** File operations are restricted to the project directory to prevent accidental system changes.
+- **Offline Fallback:** Core automation (opening apps, system info) works even if the AI planning channel is unavailable.
 
-Allow microphone permission and say:
+---
 
-Hey Neuro
+## 🏆 Hackathon: Gemini Live Agent Challenge
+This project was built specifically to showcase the reasoning and planning capabilities of the Gemini 2.5 Flash model in a local desktop environment.
+
+- **The Challenge:** Building a "Live Agent" that can interact with the real world.
+- **The Solution:** NeuroPilot bridges the gap between LLM reasoning and local system execution.
+
+---
+
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Developed with ❤️ by [Vamshi Kodi](https://github.com/VamshiKodi)
