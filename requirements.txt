@@ -1,0 +1,13 @@
+flask
+python-dotenv
+pydantic
+google-genai
+pillow
+python-weather
+psutil
+schedule
+pyautogui
+SpeechRecognition
+vosk
+requests
+beautifulsoup4

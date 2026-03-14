@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroPilot — Holographic AI Command Center</title>
+  <meta name="description" content="NeuroPilot: Jarvis-style holographic AI command center." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Geo:ital@0;1&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
+</head>
+
+<body class="robot-idle">
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  BOOT SCREEN  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <div id="boot-overlay" class="boot-overlay">
+    <div class="boot-ring-wrap">
+      <svg viewBox="0 0 160 160" class="boot-svg" aria-hidden="true">
+        <circle cx="80" cy="80" r="70" class="boot-track" />
+        <circle cx="80" cy="80" r="70" class="boot-arc" id="boot-arc" />
+        <circle cx="80" cy="80" r="52" class="boot-inner" />
+      </svg>
+      <div class="boot-logo">NP</div>
+    </div>
+    <div class="boot-box">
+      <div class="boot-title">NEUROPILOT CORE INITIALIZING<span class="blink-cursor">_</span></div>
+      <div id="boot-lines" class="boot-lines"></div>
+      <div class="boot-bar">
+        <div id="boot-bar-fill" class="boot-bar-fill"></div>
+      </div>
+      <div id="boot-footer" class="boot-footer">LOADING MODULES...</div>
+    </div>
+  </div>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ROBOT BACKGROUND  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <div id="robot-bg" aria-hidden="true">
+    <iframe title="Humanoid robot"
+      src="https://sketchfab.com/models/7d93273c207345ebab56758e1965843f/embed?autostart=1&autospin=0.2&ui_infos=0&ui_controls=0&ui_stop=0&ui_watermark=0&transparent=1"
+      frameborder="0" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+  </div>
+
+  <!-- Ambient overlays -->
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="scanline-wrap" aria-hidden="true">
+    <div class="scanline"></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="center-glow" aria-hidden="true"></div>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  AI CORE HUD RING  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <div class="hud-ring-wrap" id="hud-ring" aria-hidden="true">
+    <svg viewBox="0 0 360 360" class="hud-ring-svg">
+      <circle cx="180" cy="180" r="170" class="ring-dash" />
+      <circle cx="180" cy="180" r="170" class="ring-arc-slow" />
+      <circle cx="180" cy="180" r="170" class="ring-arc-fast" />
+      <circle cx="180" cy="180" r="148" class="ring-inner" />
+      <circle cx="180" cy="180" r="160" class="ring-pulse" id="ring-pulse" />
+      <line x1="180" y1="10" x2="180" y2="36" class="ring-tick" transform="rotate(0   180 180)" />
+      <line x1="180" y1="10" x2="180" y2="36" class="ring-tick" transform="rotate(90  180 180)" />
+      <line x1="180" y1="10" x2="180" y2="36" class="ring-tick" transform="rotate(180 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="36" class="ring-tick" transform="rotate(270 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(30  180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(60  180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(120 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(150 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(210 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(240 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(300 180 180)" />
+      <line x1="180" y1="10" x2="180" y2="24" class="ring-tick-sm" transform="rotate(330 180 180)" />
+    </svg>
+    <div class="ring-label-top">AI CORE</div>
+    <div class="ring-label-bot">NEUROPILOT</div>
+  </div>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  TOP CENTER STATUS BAR  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <header class="topbar" role="banner">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 36 42" width="28" height="32" aria-hidden="true" class="hex-svg">
+        <polygon points="18,2 34,11 34,31 18,40 2,31 2,11" class="hex-bg" />
+        <polygon points="18,2 34,11 34,31 18,40 2,31 2,11" class="hex-bd" />
+        <text x="18" y="27" text-anchor="middle" class="hex-txt">NP</text>
+      </svg>
+      <span class="topbar-name">NEUROPILOT</span>
+    </div>
+    <div class="topbar-status">
+      <span class="sdot" id="sdot"></span>
+      <span class="stext" id="hud-status">IDLE</span>
+    </div>
+    <div class="topbar-right">
+      <div class="mini-metric">
+        <span class="mmlabel">CPU</span>
+        <div class="mmbar-wrap">
+          <div class="mmbar" id="mm-cpu-bar"></div>
+        </div>
+        <span class="mmval" id="hud-cpu">--%</span>
+      </div>
+      <div class="mini-metric">
+        <span class="mmlabel">RAM</span>
+        <div class="mmbar-wrap">
+          <div class="mmbar mmbar-p" id="mm-ram-bar"></div>
+        </div>
+        <span class="mmval" id="hud-ram">--%</span>
+      </div>
+      <div class="topbar-clock" id="topbar-clock">--:--:--</div>
+    </div>
+  </header>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  FOUR FLOATING HUD PANELS  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <aside class="hpanel hpanel-tl" aria-label="System Monitor">
+    <div class="hp-header"><span class="hp-icon">◈</span> SYSTEM MONITOR</div>
+    <div class="hp-body">
+      <div class="hpm-row"><span class="hpm-k">CPU</span>
+        <div class="hpm-bar-w">
+          <div class="hpm-bar" id="p-cpu-bar"></div>
+        </div><span class="hpm-v" id="np-panel-cpu">--%</span>
+      </div>
+      <div class="hpm-row"><span class="hpm-k">MEM</span>
+        <div class="hpm-bar-w">
+          <div class="hpm-bar hpm-bar-p" id="p-ram-bar"></div>
+        </div><span class="hpm-v" id="np-panel-ram">--%</span>
+      </div>
+      <div class="hpm-row"><span class="hpm-k">DISK</span>
+        <div class="hpm-bar-w">
+          <div class="hpm-bar hpm-bar-g" id="p-disk-bar"></div>
+        </div><span class="hpm-v" id="np-panel-disk">--%</span>
+      </div>
+      <div class="hpm-divider"></div>
+      <div class="hpm-row-sm"><span class="hpm-k">PROC</span><span class="hpm-v2" id="np-panel-proc">--</span></div>
+      <div class="hpm-row-sm"><span class="hpm-k">UPTIME</span><span class="hpm-v2" id="np-panel-uptime">--</span></div>
+    </div>
+  </aside>
+
+  <aside class="hpanel hpanel-tr" aria-label="AI Activity">
+    <div class="hp-header"><span class="hp-icon">◈</span> AI ACTIVITY</div>
+    <div class="hp-body">
+      <div class="ai-state-row"><span class="ai-sk">STATE</span><span class="ai-sv" id="np-ai-state">IDLE</span></div>
+      <div class="ai-log" id="np-ai-log" aria-label="AI log"></div>
+    </div>
+  </aside>
+
+  <aside class="hpanel hpanel-bl" aria-label="User Memory">
+    <div class="hp-header"><span class="hp-icon">◈</span> USER MEMORY</div>
+    <div class="hp-body">
+      <div id="np-mem-list" class="mem-list"></div>
+    </div>
+  </aside>
+
+  <aside class="hpanel hpanel-br" aria-label="Agent Mode">
+    <div class="hp-header"><span class="hp-icon">◈</span> AGENT MODE</div>
+    <div class="hp-body">
+      <div class="agent-badge-row"><span class="agent-badge" id="np-agent-status">STANDBY</span></div>
+      <div class="agent-goal" id="np-agent-goal"></div>
+      <div class="agent-tasks" id="np-agent-tasks"></div>
+    </div>
+  </aside>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  BOTTOM CENTER CONSOLE  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <div id="chat-console" class="console-wrap" role="main">
+    <div class="console-frame" id="console-frame">
+      <div class="cc cc-tl" aria-hidden="true"></div>
+      <div class="cc cc-tr" aria-hidden="true"></div>
+      <div class="cc cc-bl" aria-hidden="true"></div>
+      <div class="cc cc-br" aria-hidden="true"></div>
+      <div class="con-topbar" aria-hidden="true">
+        <div class="con-dots"><span class="cdot cdot-r"></span><span class="cdot cdot-y"></span><span
+            class="cdot cdot-g"></span></div>
+        <span class="con-label">COGNITIVE OPERATIONS INTERFACE</span>
+        <span class="con-secure">● SECURE</span>
+      </div>
+      <div class="think-bar" id="thinking-bar" aria-hidden="true">
+        <span class="think-text">NEUROPILOT ANALYZING<span
+            class="tdots"><span>.</span><span>.</span><span>.</span></span></span>
+        <div class="think-prog">
+          <div class="think-fill"></div>
+        </div>
+      </div>
+      <section id="chat-messages" class="chat-messages" aria-label="Conversation" aria-live="polite"></section>
+
+      <!-- Agent Progress Panel -->
+      <section id="agent-progress" class="agent-panel" style="display: none;">
+        <div class="agent-header">
+          <span class="agent-title">AGENT MISSION ACTIVE</span>
+          <span id="agent-goal-text" class="agent-goal"></span>
+        </div>
+        <div id="agent-steps" class="agent-steps">
+          <!-- Steps will be injected here -->
+        </div>
+        <div class="agent-footer">
+          <span id="agent-status" class="agent-status">Thinking...</span>
+          <div class="agent-loader"></div>
+        </div>
+      </section>
+      <footer class="con-footer" role="contentinfo">
+        <div id="chat-input-container" class="composer">
+          <div class="cin-wrap">
+            <span class="cin-prefix" aria-hidden="true">&gt;&gt;</span>
+            <textarea id="chat-input" class="cin" placeholder="Enter command..." rows="1"
+              aria-label="Message input"></textarea>
+          </div>
+          <button id="voice-btn" class="cbtn cbtn-voice" type="button" aria-label="Voice input" title="Voice Input">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4z" />
+              <path d="M19 10a7 7 0 0 1-14 0" />
+              <line x1="12" y1="19" x2="12" y2="23" />
+              <line x1="8" y1="23" x2="16" y2="23" />
+            </svg>
+          </button>
+          <button id="send-btn" class="cbtn cbtn-send" type="button" aria-label="Send command">DEPLOY ➤</button>
+        </div>
+        <div id="status" class="status-line" aria-live="polite"></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  RISK CONFIRM MODAL  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+  <div id="confirm-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="modal-title">
+    <div class="modal-bd"></div>
+    <div class="modal-content">
+      <div class="mc-c mc-tl"></div>
+      <div class="mc-c mc-tr"></div>
+      <div class="mc-c mc-bl"></div>
+      <div class="mc-c mc-br"></div>
+      <div class="modal-head">
+        <div class="modal-warn">⚠</div>
+        <div class="modal-title" id="modal-title">RISK CONFIRMATION REQUIRED</div>
+        <div class="modal-sub">Multi-step execution detected — review before proceeding</div>
+      </div>
+      <div class="modal-body">
+        <div id="pending-summary" class="p-summary"></div>
+        <div id="pending-steps" class="p-steps"></div>
+      </div>
+      <div class="modal-actions">
+        <button id="confirm-btn" class="mbtn mbtn-ok">CONFIRM EXECUTION</button>
+        <button id="cancel-btn" class="mbtn mbtn-no">ABORT MISSION</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="np-toasts" class="np-toasts" aria-label="Notifications" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
