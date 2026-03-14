@@ -76,8 +76,8 @@ class ExecutorService:
         "take_screenshot": {"take screenshot", "capture screenshot", "save screenshot", "screenshot"},
         "create_text_file": {"create file", "create text file", "make file", "create a file"},
         "create_folder": {"create folder", "create a folder", "make folder", "new folder"},
-        "open_documents": {"open documents", "open my documents", "documents folder", "documents"},
-        "open_downloads": {"open downloads", "open downloads folder", "downloads folder", "downloads"},
+        "open_documents": {"open documents", "open my documents", "documents folder", "documents", "open my documents folder"},
+        "open_downloads": {"open downloads", "open my downloads", "open downloads folder", "downloads folder", "downloads", "open my downloads folder"},
         # Utilities
         "get_time": {"what time", "current time", "time now", "tell me the time", "time"},
         "get_date": {"what date", "current date", "today's date", "what day is it", "date"},

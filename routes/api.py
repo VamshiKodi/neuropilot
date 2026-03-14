@@ -67,6 +67,9 @@ def _is_goal_oriented(message: str) -> bool:
         "organize",
         "start working",
         "get ready",
+        "open my",
+        "launch",
+        "start",
     ]
     return any(p in text for p in phrases)
 
